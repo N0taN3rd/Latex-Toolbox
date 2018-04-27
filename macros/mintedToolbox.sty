@@ -1,0 +1,378 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mintedToolbox}[2018 v1.0 John Berlin minted tool box]
+
+\RequirePackage{xparse} % for \NewDocumentCommand{cmd}{args}{def}
+\RequirePackage{minted} % for minted of course
+
+%%%
+% Macro to add just the vspacing (-1em) between a input minted or macro in this file and \caption
+% Usage: 
+%    \begin{figure}
+%      \inputHTML{<path to html>}
+%      \vspaceMinted
+%      \caption{Sup}
+%   \end{figure}
+%%%
+\NewDocumentCommand{\vspaceMinted}{}{\vspace{-1em}}
+
+%%%
+% Mint a HTML file indenting the left margin by 1.5em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTML}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    xleftmargin=1.5em,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a HTML file indenting the left margin by 1.5em, fontsize: \scriptsize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTMLSmall}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    xleftmargin=1.5em,
+    fontsize=\scriptsize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a HTML file indenting the left margin by 1.5em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTMLBM}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    xleftmargin=1em,
+    xrightmargin=1em,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a HTML file, no margin indenting, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTMLNM}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a HTML file, no margin indenting, fontsize: \scriptsize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTMLSmallNM}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    fontsize=\scriptsize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a HTML file, no margin indenting, no linewrap symbol, fontsize: \scriptsize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to HTML file to be minted 
+%%%
+\NewDocumentCommand{\inputHTMLSmallTNM}{+O{linenos=false}+m}{%
+    \inputminted[frame=lines,
+    fontsize=\scriptsize,
+    breaksymbolleft=,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true,
+    #1]{html}{#2}
+}
+
+%%%
+% Mint a CSS file, left margin indented by 1em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to CSS file to be minted 
+%%%
+\NewDocumentCommand{\inputCSS}{+O{linenos=false}+m}{%
+    \inputminted[#1,
+    frame=lines,
+    xleftmargin=1em,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true]{css}{#2}
+}
+
+%%%
+% Mint a CSS file, no margin indenting, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to CSS file to be minted 
+%%%
+\NewDocumentCommand{\inputCSSNM}{+O{linenos=false}+m}{%
+    \inputminted[#1,
+    frame=lines,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true]{css}{#2}
+}
+
+%%%
+% Mint a JavaScript file, left margin indented by 1.5em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJS}{O{linenos=false}+ m}{%
+    \inputminted[frame=lines,
+    fontsize=\footnotesize,
+    xleftmargin=1.5em,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{js}{#2}
+}
+
+%%%
+% Mint a JavaScript file, both margins indented by 1em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJSBM}{O{linenos=false}+ m}{%
+    \inputminted[frame=lines,
+    fontsize=\footnotesize,
+    xleftmargin=1em,
+    xrightmargin=1em,
+    showtabs =false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{js}{#2}
+}
+
+%%%
+% Mint a JavaScript file, left margin indented by 1.5em, fontsize: \scriptsize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJSSmall}{O{linenos=false}+ m}{%
+    \inputminted[frame=lines,
+    fontsize=\scriptsize,
+    xleftmargin=1.5em,
+    showtabs =false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{js}{#2}
+}
+
+%%%
+% Mint a JavaScript file with line numbers, left margin indented by 1em, fontsize: \scriptsize
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJSSmallLN}{m}{%
+    \inputminted[frame=lines,
+    linenos=true,
+    numbersep=5pt,
+    fontsize=\scriptsize,
+    xleftmargin=1em,
+    showtabs =false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true]{js}{#1}
+}
+
+%%%
+% Mint a JavaScript file with line numbers, left margin indented by 1.5em, fontsize: \scriptsize
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJSSmallLNApend}{m}{%
+    \inputminted[frame=lines,
+    xleftmargin=1.5em,
+    linenos=true,
+    numbersep=5pt,
+    fontsize=\scriptsize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true]{js}{#1}
+}
+
+%%%
+% Mint a JavaScript file, no margin indent, fontsize: \scriptsize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to JavaScript file to be minted 
+%%%
+\NewDocumentCommand{\inputJSSmallNM}{O{linenos=false}+ m}{%
+    \inputminted[frame=lines,
+    fontsize=\scriptsize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{js}{#2}
+}
+
+%%%
+% Mint a JSON file, both margins indented by 1em
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers, fontsize: \footnotesize
+% Args Required: Path to JSON file to be minted 
+%%%
+\NewDocumentCommand{\inputJSON}{O{linenos=false,fontsize=\footnotesize} m}{%
+    \inputminted[frame=lines,
+    xleftmargin=1em,
+    xrightmargin=1em,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{json}{#2}
+}
+
+%%%
+% Mint a JSON file, no margins indenting
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers, fontsize: \scriptsize
+% Args Required: Path to JSON file to be minted 
+%%%
+\NewDocumentCommand{\inputJSONSmall}{O{linenos=false,fontsize=\scriptsize} m}{%
+    \inputminted[frame=lines,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{json}{#2}
+}
+
+%%%
+% Mint a JSON file, no margins indenting, line wrap symbol
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers, fontsize: \tiny
+% Args Required: Path to JSON file to be minted 
+%%%
+\NewDocumentCommand{\inputJSONTiny}{O{linenos=false,fontsize=\tiny} m}{%
+    \inputminted[frame=lines,
+    breaksymbolleft=,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true,
+    #1]{json}{#2}
+}
+
+%%%
+% Mint a Shell file (not windows), no margin indenting, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to Shell file to be minted 
+%%%
+\NewDocumentCommand{\inputBash}{+O{linenos=false}+m}{%
+    \inputminted[#1,
+    frame=lines,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true]{bash}{#2}
+}
+
+%%%
+% Mint a Shell file (not windows), let margin indented by 1.5em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to Shell file to be minted 
+%%%
+\NewDocumentCommand{\inputBashM}{+O{linenos=false}+m}{%
+    \inputminted[#1,
+    frame=lines,
+    xleftmargin=1.5em,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true]{bash}{#2}
+}
+
+%%%
+% Mint a .http file, let margin indented by 1.5em, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to .http file to be minted 
+%%%
+\NewDocumentCommand{\inputHTTP}{+O{linenos=false}+m}{
+    \inputminted[#1,
+    frame=lines,
+    xleftmargin=1.5em,
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breakanywhere=true,
+    breaklines=true]{HTTP}{#2}
+}
+
+%%%
+% Mint a Python file using the python3 lexer, no margin indent, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to Python file to be minted 
+%%%
+\NewDocumentCommand{\inputPY}{+O{linenos=false}+m}{%
+    \inputminted[
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true
+    #1]{python3}{#2}
+}
+
+%%%
+% Mint a Java file, no margin indent, fontsize: \footnotesize
+% Args Optional: Optional arguments supplied to minted directly, defaults to no line numbers
+% Args Required: Path to Java file to be minted 
+%%%
+\NewDocumentCommand{\inputJava}{+O{linenos=false}+m}{%
+    \inputminted[
+    fontsize=\footnotesize,
+    showtabs=false,
+    autogobble=true,
+    breaklines=true,
+    breakanywhere=true
+    #1]{java}{#2}
+}
+
+%%%
+% Mint a HTML inline
+% Args Required: HTML code to be minted inline
+%%%
+\NewDocumentCommand{\inlineHTML}{m}{\mintinline{html}{#1}}
+
+%%%
+% Mint a JavaScript inline
+% Args Required: JavaScript code to be minted inline
+%%%
+\NewDocumentCommand{\inlineJS}{m}{\mintinline[breakanywhere]{js}{#1}}
+
+%%%
+% Mint a CSS inline
+% Args Required: CSS code to be minted inline
+%%%
+\NewDocumentCommand{\inlineCSS}{m}{\mintinline{css}{#1}}

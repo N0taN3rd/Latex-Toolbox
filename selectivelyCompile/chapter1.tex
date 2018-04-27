@@ -1,0 +1,40 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\chapter{Particulars}\label{ch:howitworks}
+
+\section{subfile package}
+The subfile package\footnote{\url{http://ftp.math.purdue.edu/mirrors/ctan.org/macros/latex/contrib/subfiles/subfiles.pdf}} is a much more efficient way to bring in the sub parts of a large latex document.
+Each part of the complete document brought in via \textbf{\textbackslash subfile\{file.tex\}} and \textbf{file.tex}:
+
+\noindent Has a document class with the following structure:\newline\indent\textbackslash documentclass[\textbf{mainfile.tex}]\{\textbf{subfiles}\}
+
+
+
+\displayIf[false]{
+    \begin{figure}
+        Fig 1
+        \caption{Fig 1 does not gets compiled}
+    \end{figure}
+}
+
+\displayIf{
+    \begin{figure}
+        Fig 2
+        \caption{Fig 2 gets compiled}
+    \end{figure}
+}  
+
+\displayIf{
+    \begin{table}
+        Table 1
+        \caption{Table 1 gets compiled}
+    \end{table}
+}
+
+\displayIf[false]{
+    \begin{figure}
+        Fig 2
+        \caption{Table 2 does not gets compiled}
+    \end{figure}
+}  
+\end{document}

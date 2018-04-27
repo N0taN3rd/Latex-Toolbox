@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{graphicsToolbox}[2018 v1.0 John Berlin minted tool box]
+
+\RequirePackage{xparse} % for \NewDocumentCommand{cmd}{args}{def}
+
+
+%%%
+% Macro to remove vspacing (-1em) between a includegraphics or macro in this file and \caption
+%%%
+\NewDocumentCommand{\vspaceNegPFive}{}{\vspace{-.5em}}
+
+%%%
+% Macro to add vspacing (.5em) before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\figureTopSpace}{}{\vspace{.5em}}
+
+%%%
+% Macro to add vspacing (1em) before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\figureTopDoubleSpace}{}{\vspace{1em}}
+
+%%%
+% Macro to add vspacing (1em) and centering before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredTopDoubleSpace}{}{\centering\vspace{1em}}
+
+%%%
+% Macro to add vspacing (1em), centering, and \ContinuedFloat before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedCenteredTopSpaceFloat}{}{\ContinuedFloat\centering\figureTopSpace}
+
+%%%
+% Macro to add centering, and \ContinuedFloat before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedCenteredFloat}{}{\ContinuedFloat\centering}
+
+%%%
+% Macro to add centering, and \figureTopSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredTopSpaceFloat}{}{\centering\figureTopSpace}
+
+%%%
+% Macro to add centering, and \figureTopDoubleSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredDoubleTopSpaceFloat}{}{\centering\figureTopDoubleSpace}
+
+%%%
+% Macro to add \ContinuedFloat, and \figureTopDoubleSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedTopSpaceFloat}{}{\ContinuedFloat\figureTopSpace}
+
+
+\NewDocumentCommand{\imageKeepAspect}{+o +m}{%
+    \IfNoValueTF {#1}%
+    {\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{#2}}%
+    {\includegraphics[#1,keepaspectratio]{#2}}%
+}
+
+\NewDocumentCommand{\imageKeepAspectSmushWidth}{+m +m}{%
+    \includegraphics[width=#1\textwidth,height=\textheight,keepaspectratio]{#2}%
+}
+
+\NewDocumentCommand{\imageKeepAspectSmushHeight}{+m +m}{%
+    \includegraphics[width=\textwidth,height=#1\textheight,keepaspectratio]{#2}%
+}
+
+
+\NewDocumentCommand{\imageKeepAspectSmushWidthHeight}{+m +m +m}{%
+    \includegraphics[width=#1\textwidth,height=#2\textheight,keepaspectratio]{#3}%
+}
+
+\NewDocumentCommand{\imageKeepAspectTrim}{+O +m}{%
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio,trim={#1},clip]{#2}%
+}
+
+\NewDocumentCommand{\imageKeepAspectScale}{+O +m}{%
+    \includegraphics[scale=#1,keepaspectratio]{#2}%
+}
+
+\NewDocumentCommand{\imageKeepAspectScaleTWH}{+O +m}{%
+    \includegraphics[scale=#1,width=\textwidth,height=\textheight,,keepaspectratio]{#2}%
+}
+
+\NewDocumentCommand{\imageKeepAspectTrimScale}{+O +O +m}{%
+    \includegraphics[trim={#1},scale=#2,width=\textwidth,height=\textheight,keepaspectratio]{#3}%
+}
+
+\NewDocumentCommand{\imageKeepAspectTrimScalez}{+O +O +m}{%
+    \includegraphics[trim={#1},scale=#2,keepaspectratio]{#3}%
+}
+
+\NewDocumentCommand{\tableTopSpace}{}{\vspace{.5em}}
+\NewDocumentCommand{\tableTopDoubleSpace}{}{\vspace{1em}}

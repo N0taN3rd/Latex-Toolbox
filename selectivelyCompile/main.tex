@@ -1,0 +1,150 @@
+\documentclass[%
+oneside, %
+12pt,%
+doublespace,
+pdftex,%
+english,%
+master,%
+% draft%
+]{wsdlthesis}
+
+%% For dummy text 
+\usepackage{lipsum}
+%% Documentation linkage
+\usepackage[colorlinks=false,hidelinks,]{hyperref}
+
+
+%%% Used for selective compilation
+\usepackage{xparse}
+\usepackage{xstring}
+\usepackage{subfiles}
+\usepackage{ifthen}
+
+%%%%
+% Macro setup
+
+%% Booleans for use in selective compilation
+
+%%% Controls showing the preface
+\newboolean{displayPrface} 
+\setboolean{displayPrface}{false}
+
+%%% Controls showing the abstract
+\newboolean{displayAbstct}  
+\setboolean{displayAbstct}{false}
+
+%%% Controls showing each chapter
+\newboolean{displayCh1} 
+\setboolean{displayCh1}{false}
+%\newboolean{displayCh<N>}
+%\setboolean{displayCh<N>}{false}
+
+
+%%% Controls showing the appendix
+\newboolean{displayApndx}  
+\setboolean{displayApndx}{false}
+
+%%% Controls showing the vita page
+\newboolean{displayVta}  
+\setboolean{displayVta}{false}
+
+
+\NewDocumentCommand{\displayPreface}{}{
+    \setboolean{displayPrface}{true}
+}
+
+\NewDocumentCommand{\displayAppendix}{}{
+    \setboolean{displayApndx}{true}
+}
+
+\NewDocumentCommand{\displayAbstract}{}{
+    \setboolean{displayAbstct}{true}
+}
+
+\NewDocumentCommand{\displayVita}{}{
+    \setboolean{displayVta}{true}
+}
+
+%%% Sets each chapters display boolean to true
+\NewDocumentCommand{\displayAllChapters}{}{
+    \setboolean{displayCh1}{true} 
+    %\setboolean{display<ChN>}{true}
+}
+
+%%% Takes a single agrument, a number (1,2,3,...), 
+%%% and matches it to which chapter you want to compile 
+\NewDocumentCommand{\displayChapter}{m}{
+    \IfEq{1}{#1}{\setboolean{displayCh1}{true}}{}
+}
+
+%%% Processes a comma separated list of chapters, 
+%%% or single you want to compile
+\NewDocumentCommand{\displayOnlyChapters}{ > { \SplitList { , } } m}{
+    \ProcessList {#1} { \displayChapter }  
+}
+
+
+%%% This macro takses a single optional argument True or False
+%%% The body of the macro
+\NewDocumentCommand{\displayIf}{O{true}+m} {
+    \ifthenelse{\boolean{#1}}{#2}{}%
+}
+
+%%%%
+
+
+%%% Control display using the macros before document begins
+
+
+%% Show only a single chapter 
+%\displayOnlyChapters{1}
+%% or multiple chapters
+%\displayOnlyChapters{1,2}
+
+%%% Full document control
+\displayAbstract
+\displayPreface
+\displayAllChapters
+\displayAppendix
+\displayVita
+
+%%% cause errors
+\title{To Selectively Compile}
+\author{John Berlin}
+\principaladviser{Mat Kelly}
+\degrees{MS CS}
+\dept{Computer Science}
+\submitdate{May 2018}
+
+\begin{document}
+
+\displayIf[displayAbstct]{
+    \abstract{\lipsum[1]}
+    \beforepreface
+}
+
+\displayIf[displayPrface]{	
+    \subfile{preface}
+    \afterpreface
+}
+
+\displayIf[displayCh1]{	
+    \subfile{chapter1}
+}
+
+%\displayIf[displayCh<N>]{	
+%    \subfile{<chapter.tex>}
+%}
+
+
+\displayIf[displayApndx]{	
+    \appendix
+    \subfile{appendices}
+}
+
+\displayIf[displayVta]{	
+    \subfile{vita}
+    \vitapage
+}
+
+\end{document}
