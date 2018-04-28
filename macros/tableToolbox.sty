@@ -1,0 +1,31 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tableToolbox}[2018 v1.0 John Berlin latex table tool box]
+
+\RequirePackage{kvoptions} % for keyvalue options
+\RequirePackage{xparse} % for \NewDocumentCommand{cmd}{args}{def}
+\RequirePackage{calc}
+\RequirePackage{printlen}
+
+\DeclareStringOption[.5em]{topSpace}[.5em]
+\DeclareBoolOption[false]{disable}
+
+\ProcessKeyvalOptions*
+
+\newlength{\tableToolbox@doubleTopSpace}
+\setlength{\tableToolbox@doubleTopSpace}{\tableToolbox@topSpace*2}
+
+\NewDocumentCommand{\showTableToolboxConfig}{}{%
+  \newlength{\tableTop}
+  \setlength{\tableTop}{\tableToolbox@topSpace} 
+  \wlog{tableToolbox: The table top space = \printlength{\tableTop}}
+  \wlog{tableToolbox: The table double top space = \printlength{\tableToolbox@doubleTopSpace}}
+  \wlog{tableToolbox: The table top is \iftableToolbox@disable\else not \fi disabled}
+}
+
+
+\NewDocumentCommand{\tableTopSpace}{}{%
+    \iftableToolbox@disable\else\vspace{\tableToolbox@topSpace}\fi%
+}
+\NewDocumentCommand{\tableTopDoubleSpace}{}{%
+    \iftableToolbox@disable\else\vspace{\tableToolbox@doubleTopSpace}\fi%
+}
