@@ -1,8 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mintedToolbox}[2018 v1.0 John Berlin minted tool box]
+\ProvidesPackage{mintedUtil}[2018 v1.0 John Berlin minted utils]
 
-\RequirePackage{xparse} % for \NewDocumentCommand{cmd}{args}{def}
-\RequirePackage{minted} % for minted of course
+\RequirePackage{xparse}
+
+\@ifpackageloaded{minted}{}%
+{\PackageError{mintedUtil}{The package "mintedUtil" may not be loaded before "minted"}{Load "mintedUtil" only when "minted" has been loaded previously}}
 
 %%%
 % Macro to add just the vspacing (-1em) between a input minted or macro in this file and \caption

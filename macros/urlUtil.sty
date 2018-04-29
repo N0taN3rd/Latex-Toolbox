@@ -1,0 +1,46 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{graphicsToolbox}[2018 v1.0 John Berlin minted tool box]
+
+\RequirePackage{xstring}
+\RequirePackage{xparse}
+\RequirePackage{xspace}
+
+%%%
+% If biblatex is loaded configure nicer URL breaking in citations
+%%%
+\@ifpackageloaded{biblatex}{
+   \setcounter{biburllcpenalty}{7000}
+   \setcounter{biburlucpenalty}{8000}
+}{}
+
+%%%
+% If hyperref is loaded, adds additional url breaks
+%%%
+\@ifpackageloaded{hyperref}{
+   \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\UrlOrds%  save the current one
+       \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+       \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+       \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+       \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+       \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+       \do\Y\do\Z}
+}{}
+
+%%%
+% Macro to nicely format URLs to included in text, not using the hyperref or url packages
+% Required Arguments 1: A URL
+%%%
+\NewDocumentCommand{\textURL}{ m }{\StrSubstitute{#1}{/}{\slash}}
+
+%%%
+% Macro to nicely format URLs to included in text that ensures a space (if needed) is added after, not using the hyperref or url packages
+% Required Arguments 1: A URL
+%%%
+\NewDocumentCommand{\textURLSp}{ m }{\StrSubstitute{#1}{/}{\slash}\xspace}
+
+%%%
+% Macro to easily add a clickable URL to the document as a footnote
+% Required Arguments 1: A URL
+%%%
+\NewDocumentCommand{\ftURL}{ m }{\footnote{\raggedright \url{#1}}}
+

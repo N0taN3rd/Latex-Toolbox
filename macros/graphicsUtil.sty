@@ -1,0 +1,140 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{graphicsUtil}[2018 v1.0 John Berlin minted tool box]
+
+\RequirePackage{kvoptions}
+\RequirePackage{xparse}
+\RequirePackage{calc}
+\RequirePackage{printlen}
+
+\@ifpackageloaded{graphicx}{}%
+{\PackageError{graphicsUtil}{The package "graphicsUtil" may not be loaded before "graphicx"}{Load "graphicsUtil" only when "graphicx" has been loaded previously}}
+
+\DeclareStringOption[.5em]{topSpace}[.5em]
+\DeclareStringOption[1em]{doubleTopSpace}[1em]
+\DeclareBoolOption[false]{disable}
+
+\ProcessKeyvalOptions*
+
+%%%
+% Macro to remove vspace (-0.5em) between a includegraphics or macro in this file and \caption
+%%%
+\NewDocumentCommand{\vspaceNegPFive}{}{\vspace{-.5em}}
+
+%%%
+% Macro to add vspace (default .5em) before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\figureTopSpace}{}{\ifgraphicsUtil@disable\else\vspace{\graphicsUtil@topSpace}\fi}
+
+%%%
+% Macro to add vspace (default 1em) before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\figureTopDoubleSpace}{}{\ifgraphicsUtil@disable\else\vspace{\graphicsUtil@doubleTopSpace}\fi}
+
+%%%
+% Macro to add vspace (default 1em) and centering before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredTopDoubleSpace}{}{\centering\figureTopDoubleSpace}
+
+%%%
+% Macro to add centering, and \ContinuedFloat before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedCenteredFloat}{}{\ContinuedFloat\centering}
+
+%%%
+% Macro to add \figureTopSpace, centering, and \ContinuedFloat before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedCenteredTopSpaceFloat}{}{\ContinuedFloat\centering\figureTopSpace}
+
+%%%
+% Macro to add \ContinuedFloat, and \figureTopSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\continuedTopSpaceFloat}{}{\ContinuedFloat\figureTopSpace}
+
+%%%
+% Macro to add centering, and \figureTopSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredTopSpaceFloat}{}{\centering\figureTopSpace}
+
+%%%
+% Macro to add centering, and \figureTopDoubleSpace before a includegraphics or macro in this file
+%%%
+\NewDocumentCommand{\centeredDoubleTopSpaceFloat}{}{\centering\figureTopDoubleSpace}
+
+
+%%%
+% Macro wrapping \includegraphics that adds the optional argument keepaspectration by default
+% Optional Arguments:  Any argumnents defined by the graphicsx package. 
+% 	If none are supplied the includedgraphic is supplied the optional args (width=\textwidth,height=\textheight,keepaspectratio)
+% Required Arguments: Path to image/pdf/etc to include
+%%%
+\NewDocumentCommand{\imageKeepAspect}{+o +m}{%
+    \IfNoValueTF {#1}%
+    {\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{#2}}%
+    {\includegraphics[#1,keepaspectratio]{#2}}%
+}
+
+%%%
+% Macro wrapping \includegraphics that keeps the aspect ratio of the image/pdf/etc added
+% while reducing the its width
+% Required Arguments: 2
+%   1: The percentatage of \textwidth to smush the graphics by
+%   2: Path to image/pdf/etc to include
+% Usage: 
+%   \imageKeepAspectSmushWidth{.9}{<path to image/pdf/etc>}
+%%%
+\NewDocumentCommand{\imageKeepAspectSmushWidth}{+m +m}{%
+    \includegraphics[width=#1\textwidth,height=\textheight,keepaspectratio]{#2}%
+}
+
+%%%
+% Macro wrapping \includegraphics that keeps the aspect ratio of the image/pdf/etc added
+% while reducing the its height 
+% Required Arguments: 2
+%   1: The percentatage of \textheight to smush the graphics by
+%   2: Path to image/pdf/etc to include
+% Usage: 
+%   \imageKeepAspectSmushHeight{.27}{<path to image/pdf/etc>}
+%%%
+\NewDocumentCommand{\imageKeepAspectSmushHeight}{+m +m}{%
+    \includegraphics[width=\textwidth,height=#1\textheight,keepaspectratio]{#2}%
+}
+
+%%%
+% Macro wrapping \includegraphics that keeps the aspect ratio of the image/pdf/etc added
+% while reducing the its width and height
+% Required Arguments: 3
+% 	1: The percentatage of \textwidth to smush the graphics by
+%   2: The percentatage of \textheight to smush the graphics by
+%   3: Path to image/pdf/etc to include
+% Usage: 
+%   \imageKeepAspectSmushWidthHeight{.9}{.1}{<path to image/pdf/etc>}
+%%%
+\NewDocumentCommand{\imageKeepAspectSmushWidthHeight}{+m +m +m}{%
+    \includegraphics[width=#1\textwidth,height=#2\textheight,keepaspectratio]{#3}%
+}
+
+%%%
+% Macro wrapping \includegraphics that keeps the aspect ratio of the image/pdf/etc added
+% while trimming the image
+% Required Arguments: 2
+% 	1: The trim values supplied
+%   2: Path to image/pdf/etc to include
+% Usage: 
+%   \imageKeepAspectTrim{<left> <lower> <right> <upper>}{<path to image/pdf/etc>}
+%%%
+\NewDocumentCommand{\imageKeepAspectTrim}{+m +m}{%
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio,trim={#1},clip]{#2}%
+}
+
+%%%
+% Macro wrapping \includegraphics that keeps the aspect ratio of the image/pdf/etc added
+% while scaling the image within \textwidth
+% Required Arguments: 2
+% 	1: The scale value
+%   2: Path to image/pdf/etc to include
+% Usage: 
+%   \imageKeepAspectScale{.5}{<path to image/pdf/etc>}
+%%%
+\NewDocumentCommand{\imageKeepAspectScale}{+m +m}{%
+    \includegraphics[scale=#1,keepaspectratio]{#2}%
+}

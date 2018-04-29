@@ -17,9 +17,7 @@
 \NewDocumentCommand{\showTableToolboxConfig}{}{%
   \newlength{\tableTop}
   \setlength{\tableTop}{\tableToolbox@topSpace} 
-  \wlog{tableToolbox: The table top space = \printlength{\tableTop}}
-  \wlog{tableToolbox: The table double top space = \printlength{\tableToolbox@doubleTopSpace}}
-  \wlog{tableToolbox: The table top is \iftableToolbox@disable\else not \fi disabled}
+  \wlog{tableToolbox: The table top space = \printlength{\tableTop},  double top space = \printlength{\tableToolbox@doubleTopSpace}, top space is \iftableToolbox@disable\else not \fi disabled}
 }
 
 

@@ -73,7 +73,8 @@ master,%
 
 %%% Takes a single agrument, a number (1,2,3,...), 
 %%% and matches it to which chapter you want to compile 
-\NewDocumentCommand{\displayChapter}{m}{
+\NewDocumentCommand{\displayChapter}{m}{ %
+    % add aditional \IfEq{n}{#1}{\setboolean{displayCh<N>}{else} in else block
     \IfEq{1}{#1}{\setboolean{displayCh1}{true}}{}
 }
 
@@ -85,12 +86,10 @@ master,%
 
 
 %%% This macro takses a single optional argument True or False
-%%% The body of the macro
+%%% The required argument can be anything
 \NewDocumentCommand{\displayIf}{O{true}+m} {
     \ifthenelse{\boolean{#1}}{#2}{}%
 }
-
-%%%%
 
 
 %%% Control display using the macros before document begins
