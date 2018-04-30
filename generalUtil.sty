@@ -1,0 +1,64 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{generalUtil}[2018 v1.0 John Berlin general utility macros]
+
+\RequirePackage{xcolor}
+\RequirePackage{xparse}
+
+%%%
+% Counter for the address edit footnotes
+%%%
+\newcounter{editFtnt}
+
+%%%
+% Macro that allows text that would not normally be allowed to wrap lines to be line-wraped/broken
+%%%
+\NewDocumentCommand{\justifyText}{}{%
+    \fontdimen2\font=0.4em% interword space
+    \fontdimen3\font=0.2em% interword stretch
+    \fontdimen4\font=0.1em% interword shrink
+    \fontdimen7\font=0.1em% extra space
+    \hyphenchar\font=`\-% allowing hyphenation
+}
+
+%%%
+% Macro that wraps \texttt ensuring the text will be allowed to line-wraped/broken 
+% Required Arguments 1: anything normally passed as an argument to \texttt
+%%%
+\NewDocumentCommand{\justifyTTT}{m}{\texttt{\justifyText #1}}
+
+
+%%%
+% Macro to wraps \textbf to make it blue
+% Required Arguments 1: text to be colored blue
+%%%
+\NewDocumentCommand{\boldblue}{m}{\textcolor{blue}{\textbf{#1}}}
+
+%%%
+% Macro to wraps \textbf to make it brown
+% Required Arguments 1: text to be colored brown
+%%%
+\NewDocumentCommand{\boldbrown}{m}{\textcolor{brown}{\textbf{#1}}}
+
+%%%
+% Macro to wraps \textbf to make it red
+% Required Arguments 1: text to be colored red
+%%%
+\NewDocumentCommand{\boldred}{m}{\textcolor{red}{\textbf{#1}}}
+
+%%%
+% Macro for denoting edits to be applied by changing the footnote marker 
+% to \dagger and makes the marker and text bold red.
+% Theses footnotes are numbered separately from your normal footnotes
+% Required Arguments 1: text to be the body of the edit footnote
+%%%
+\NewDocumentCommand{\addressEditFTNT}{m}{%
+    \stepcounter{editFtnt}%
+    {\renewcommand{\thefootnote}{\boldred{\arabic{editFtnt}$\dagger$}}%
+        \boldred{\footnote{\boldred{#1}}}}%
+}
+
+%%%
+% Macro to tighten up the spacing of listing environments
+%%%
+\NewDocumentCommand{\tightlist}{}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+

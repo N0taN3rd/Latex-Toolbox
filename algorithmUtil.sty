@@ -1,0 +1,173 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{algorithmUtil}[2018 v1.0 John Berlin algorithm environment utility macros]
+
+\RequirePackage{kvoptions}
+\RequirePackage{xparse}
+\RequirePackage{xparse}
+
+\DeclareStringOption[.1em]{topSpace}[.1em] % amount of top space to be applied
+\DeclareBoolOption[false]{smallerText} % should the text size used by algorithmic environments be \footnotesize
+\DeclareBoolOption[false]{disable} % should the amount of top space added by \algoTopSpace be removed
+
+\ProcessKeyvalOptions*
+
+\@ifpackageloaded{algpseudocode}{}%
+{\PackageError{algpseudocode}{The package "algorithmUtil" may not be loaded before "algorithmUtil"}{Load "algorithmUtil" only when "algpseudocode" has been loaded previously}}
+
+
+%%%
+% If hyperref is loaded ensure \autoref has the correct name
+%%%
+\@ifpackageloaded{hyperref}{
+   \newcommand{\algorithmautorefname}{Algorithm}
+}{}
+
+%%%
+% If smallerText boolean switch is enabled make the text size of algorithmic environments \footnotesize 
+%%%
+\ifalgorithmUtil@smallerText
+  \makeatletter
+     \algrenewcommand\ALG@beginalgorithmic{\footnotesize}
+   \makeatother
+\fi
+
+%%%
+% Adds goto keyword
+%%%
+\algnewcommand{\algorithmicgoto}{\textbf{goto}}
+
+%%%
+% Macro for better goto statement requires label within algorithmic env to work
+%%%
+\algnewcommand{\Goto}[1]{\algorithmicgoto~\ref{#1}}
+
+%%%
+% Adds for each loop
+%%%
+\algnewcommand{\algorithmicforeach}{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+%%%
+% Makes the \Return statement macro better
+%%%
+\let\oldReturn\Return
+\renewcommand{\Return}{\State\oldReturn}
+
+%%%
+% Macro to add vspace (default .1em) before a \begin{algorithm} environment
+%%%
+\NewDocumentCommand{\algoTopSpace}{}{\ifalgorithmUtil@disable\else\vspace*{\algorithmUtil@topSpace}\fi}
+
+%%%
+% Macro wrapper around \texttt for algorithmic environments
+%%%
+\NewDocumentCommand{\vars}{+m}{\texttt}
+
+%%%
+% Macro wrapper around \textrm for algorithmic environments
+%%%
+\NewDocumentCommand{\func}{+m}{\textrm}
+
+%%%
+% Macro for print <arg> statements in algorithmic environments
+% Required Arguments 1: the text for <arg>
+%%%
+\NewDocumentCommand{\Print}{m}{%
+    \State \textbf{print} #1%
+}
+
+%%%
+% Macro alias for \Return 
+%%%
+\NewDocumentCommand{\Ret}{\State \textbf{return}}
+
+%%%
+% Macro for function calls, <function>(<args>), within statements in algorithmic environments
+% Required Arguments 2: <function>, <args>
+%%%
+\NewDocumentCommand{\call}{m m}{#1(#2)}
+
+%%%
+% Macro for function call statements, <function>(<args>), in algorithmic environments
+% Required Arguments 2: <function>, <args>
+%%%
+\NewDocumentCommand{\callS}{m m}{\State #1(#2)}
+
+%%%
+% Macro for member function call, <obj>.<function>(<args>), within statements in algorithmic environments
+% Required Arguments 3: <obj>, <function>, <args>
+%%%
+\NewDocumentCommand{\memCall}{m m m}{#1$.$\textbf{#2}(#3)}
+
+%%%
+% Macro for member function call statements, <obj>.<function>(<args>), in algorithmic environments
+% Required Arguments 3: <obj>, <function>, <args>
+%%%
+\NewDocumentCommand{\memCallS}{m m m}{\State #1$.$\textbf{#2}(#3)}
+
+%%%
+% Macro for a goto statement in algorithmic environments
+% Required Arguments 1: <goto ref>
+%%%
+\NewDocumentCommand{\GT}{m}{\State \Goto{#1}}
+
+%%%
+% Macro for a break statement in algorithmic environments
+%%%
+\NewDocumentCommand{\brk}{\State break}
+
+%%%
+% Macro for asignment statement, <a> <- <b>, in algorithmic environments
+% Required Arguments 2: <a>, <b>
+%%%
+\NewDocumentCommand{\Let}{+m +m}{%
+    \State #1 $\gets$ #2%
+}
+
+%%%
+% Macro for asignment to index statement, <a>[<index/key>] <- <b>, in algorithmic environments
+% Required Arguments 3: <a>, <index/key>, <b>
+%%%
+\NewDocumentCommand{\IndexAssign}{+m +m m}{%
+    \State #1[#2] $\gets$ #3%
+}
+
+%%%
+% Macro for asignment to from index statement, <a> <- <b>[<index/key>], in algorithmic environments
+% Required Arguments 3: <a>, <b>, <index/key>
+%%%
+\NewDocumentCommand{\AssignFromIndex}{+m +m +m}{%
+    \State #1 $\gets$ #2[#3]%
+}
+
+%%%
+% Macro for asignment to from something yeilded, <a> <- yield <b>, in algorithmic environments
+% Required Arguments 2: <a>, <b>
+%%%
+\NewDocumentCommand{\YieldS}{+m +m}{%
+    \State #1 $\gets$ \textbf{yield}  #2%
+}
+
+%%%
+% Macro for yeild statments, yield <a>, in algorithmic environments
+% Required Arguments 1: <a>
+%%%
+\NewDocumentCommand{\Yield}{+m}{%
+    \State \textbf{yield} #1%
+}
+
+%%%
+% Macro for increment assignment statments, <a> <- <a>, in algorithmic environments
+% Required Arguments 1: <a>
+%%%
+\NewDocumentCommand{\Increment}{+m}{%
+    \Let{$#1$}{$#1+1$}% 
+}
+
+%%%
+% Macro for  a in b, <a> \in <b>, withing statements in algorithmic environments
+% Required Arguments 2: <a>, <b>
+%%%
+\NewDocumentCommand{\AInB}{+m +m}{% 
+    $#1 \in #2$%
+}

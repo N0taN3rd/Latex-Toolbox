@@ -1,32 +1,38 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{graphicsUtil}[2018 v1.0 John Berlin minted tool box]
+\ProvidesPackage{graphicsUtil}[2018 v1.0 John Berlin graphics utility macros]
 
 \RequirePackage{kvoptions}
 \RequirePackage{xparse}
-\RequirePackage{calc}
-\RequirePackage{printlen}
 
 \@ifpackageloaded{graphicx}{}%
 {\PackageError{graphicsUtil}{The package "graphicsUtil" may not be loaded before "graphicx"}{Load "graphicsUtil" only when "graphicx" has been loaded previously}}
 
-\DeclareStringOption[.5em]{topSpace}[.5em]
-\DeclareStringOption[1em]{doubleTopSpace}[1em]
-\DeclareBoolOption[false]{disable}
+\DeclareStringOption[.5em]{topSpace}[.5em] % amount of top space to be applied
+\DeclareStringOption[1em]{doubleTopSpace}[1em] % amount of double top space to be applied
+\DeclareBoolOption[false]{disable} % disables the additional top space added via \figureTopSpace and \figureTopDoubleSpace
 
 \ProcessKeyvalOptions*
 
-%%%
-% Macro to remove vspace (-0.5em) between a includegraphics or macro in this file and \caption
-%%%
-\NewDocumentCommand{\vspaceNegPFive}{}{\vspace{-.5em}}
 
 %%%
 % Macro to add vspace (default .5em) before a includegraphics or macro in this file
+% Usage:
+% \begin{figure}
+%	\figureTopSpace
+%   includegraphics{}
+% \end{figure}
 %%%
 \NewDocumentCommand{\figureTopSpace}{}{\ifgraphicsUtil@disable\else\vspace{\graphicsUtil@topSpace}\fi}
 
 %%%
 % Macro to add vspace (default 1em) before a includegraphics or macro in this file
+%%%
+% Macro to add vspace (default .5em) before a includegraphics or macro in this file
+% Usage:
+% \begin{figure}
+%	\figureTopDoubleSpace
+%   includegraphics{}
+% \end{figure}
 %%%
 \NewDocumentCommand{\figureTopDoubleSpace}{}{\ifgraphicsUtil@disable\else\vspace{\graphicsUtil@doubleTopSpace}\fi}
 
@@ -137,4 +143,12 @@
 %%%
 \NewDocumentCommand{\imageKeepAspectScale}{+m +m}{%
     \includegraphics[scale=#1,keepaspectratio]{#2}%
+}
+
+%%%
+% Macro to print the configuration of \tableTopSpace, \tableTopDoubleSpace, 
+% and if those macros are disabled to the log file
+%%%
+\NewDocumentCommand{\showgraphicsUtilUtilConfig}{}{%
+    \wlog{graphicsUtil: The figure top space = \graphicsUtil@topSpace,  double top space = \graphicsUtil@doubleTopSpace, top space is \ifgraphicsUtil@disable\else not \fi disabled}
 }

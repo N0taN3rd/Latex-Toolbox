@@ -1,0 +1,62 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{IEETransactionsNetworkingJournalModel}[2018 v1.0 John Berlin IEE Transactions Networking Journal Model]
+
+% Conditionally load packages required for this that maybe included elsewhere
+\@ifpackageloaded{babel}{}{
+    \RequirePackage[english]{babel}
+}
+\@ifpackageloaded{biblatex}{
+    \ExecuteBibliographyOptions{style=ieee,citestyle=numeric}
+}{
+    \RequirePackage[style=ieee,citestyle=numeric,backend=biber,hyperref=auto,bibencoding=utf8]{biblatex}
+}
+\@ifpackageloaded{caption}{}{
+    \RequirePackage{caption}
+}
+\@ifpackageloaded{hyperref}{}{
+    \PassOptionsToPackage{hyphens,lowtilde}{url}
+    \RequirePackage[hidelinks,breaklinks=true,pdfusetitle,colorlinks=false,hyperfootnotes=true,pdfencoding=auto,pdfprintscaling=None]{hyperref}
+}
+\@ifpackageloaded{microtype}{
+     \microtypecontext{protrusion=false}
+}{
+   \RequirePackage[protrusion=false]{microtype}
+}
+
+\RequirePackage{xparse}
+
+
+% Configure nicer URL breaking in citations
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+
+% Ensure that author name hashing can not happen
+\renewbibmacro*{bbx:savehash}{}
+
+% Figure captions and then ensure \chapter and \appendix use all caps
+\addto\captionsenglish{
+    \renewcommand{\figurename}{Fig.}
+    \renewcommand{\appendixname}{APPENDIX}
+    \renewcommand{\chaptername}{CHAPTER}
+}
+
+% \autoref names
+\addto\extrasenglish{%
+    \def\listingautorefname{Listing} 
+    \def\chapterautorefname{Chapter} 
+    \def\sectionautorefname{Section}
+    \def\subsectionautorefname{Subsection}  
+    \def\subsubsectionnautorefname{Subsubsection}   
+    \def\Appendixautorefname{Appendix}  
+}
+
+% Ensure TOC has dots after table/figure numbers and the table/figure captions conform to IEE Transactions Networking
+% https://tex.stackexchange.com/questions/99147/color-an-entry-in-the-list-of-figures
+\DeclareCaptionListFormat{moredots}{#2.}
+\captionsetup[figure]{labelsep=period,listformat=moredots} 
+\captionsetup[table]{justification=centering, labelsep=newline, listformat=moredots}
+
+% Macro to print the references out correctly
+\NewDocumentCommand{\printRefs}{}{{\renewcommand{\markboth}[2]{}\printbibliography[title=REFERENCES]}}
+
+

@@ -1,0 +1,40 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{recommendedPackages}[2018 v1.0 John Berlin recommended packages]
+
+\RequirePackage[T1]{fontenc}  % better default font type usage
+\RequirePackage[utf8]{inputenc}  % better input type handling
+\RequirePackage[protrusion=false]{microtype} % better typography
+\RequirePackage[
+rm={lining=true,proportional=true},
+sf={lining=true,proportional=true},
+tt={lining=true,variable=false,proportional=true},
+qt=false
+]{cfr-lm} % better font type than Computer Modern 
+\RequirePackage{mathtools} % math symbol setup
+\RequirePackage{amssymb}  % math symbol setup
+\RequirePackage{enumitem}  % better list item control
+\RequirePackage{xcolor}  % colors 
+\RequirePackage{float}  % better floating environments and the H "PUT IT HERE" option
+\RequirePackage[cache=true]{minted}  % better way to include code, comes with syntax highlighting by default. BUT REQUIRES pygments to be installed
+\RequirePackage[style=american]{csquotes}  % provides \enquote command so you do not have to worry about quotes in latex
+\RequirePackage{caption} % better way to caption
+\RequirePackage{subcaption} % better way to \subfigure and \captionof
+\RequirePackage{array} % control thy table column types
+\RequirePackage{booktabs} % make nicer looking tables
+\RequirePackage{tabularx} % new table environment that allows you to specify column width not inner column spacing
+\RequirePackage{multirow} % multirow table columns
+\RequirePackage{makecell} % customized table columns
+\RequirePackage[hang,marginal]{footmisc} % better footnote handling 
+\RequirePackage{afterpage} % to execute a macro after each page
+\PassOptionsToPackage{hyphens,lowtilde}{url}
+\RequirePackage[hidelinks,breaklinks=true,pdfusetitle,% 
+colorlinks=false,hyperfootnotes=true,pdfencoding=auto,pdfprintscaling=None]{hyperref} % better url and referencing 
+\RequirePackage[backend=biber,hyperref=auto,bibencoding=utf8]{biblatex} % much better biliography handling
+\RequirePackage[nameinlink]{cleveref} % sometimes \autoref does not cut it
+\RequirePackage{rotating} % sometimes you need to rotate a figure
+\RequirePackage{algorithm} % for the algorithm environment
+\RequirePackage[noend]{algpseudocode} % for better algorithm typesetting
+
+
+% Ensure all figures are displayed on the correct page and we do not get any drifting figs
+\afterpage{\clearpage} 

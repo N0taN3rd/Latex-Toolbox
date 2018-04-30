@@ -1,0 +1,50 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tableUtil}[2018 v1.0 John Berlin latex table tool box]
+
+\RequirePackage{kvoptions}
+\RequirePackage{xparse}
+
+\DeclareStringOption[.5em]{topSpace}[.5em] % amount of top space to be applied
+\DeclareStringOption[1em]{doubleTopSpace}[1em] % amount of double top space to be applied
+\DeclareBoolOption[false]{disable} % disables the additional top space added via \tableTopSpace and \tableTopDoubleSpace
+
+\ProcessKeyvalOptions*
+
+%%%
+% Macro to change the amount of \arraystretch used for a single table
+% Required Arguments 1: the amount of array stretch
+%%%
+\NewDocumentCommand{\ra}{m}{\renewcommand{\arraystretch}{#1}}
+
+
+%%%
+% Macro to add vspace (.5em) above a table
+% Usage:
+% \begin{table}
+%	\tableTopSpace
+%    .... table code ....
+% \end{table}
+%%%
+\NewDocumentCommand{\tableTopSpace}{}{%
+    \iftableUtil@disable\else\vspace{\tableUtil@topSpace}\fi%
+}
+
+%%%
+% Macro to add vspace (1em) above a table 
+% Usage:
+% \begin{table}
+%	\tableTopDoubleSpace
+%    .... table code ....
+% \end{table}
+%%%
+\NewDocumentCommand{\tableTopDoubleSpace}{}{%
+    \iftableUtil@disable\else\vspace{\tableUtil@doubleTopSpace}\fi%
+}
+
+%%%
+% Macro to print the configuration of \tableTopSpace, \tableTopDoubleSpace, 
+% and if those macros are disabled to the log file
+%%%
+\NewDocumentCommand{\showtableUtilConfig}{}{%
+  \wlog{tableUtil: The table top space = \tableUtil@topSpace,  double top space = \tableUtil@doubleTopSpace, top space is \iftableUtil@disable\else not \fi disabled}
+}

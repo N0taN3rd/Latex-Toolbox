@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{graphicsToolbox}[2018 v1.0 John Berlin minted tool box]
+\ProvidesPackage{urlUtil}[2018 v1.0 John Berlin URL utility macros]
 
 \RequirePackage{xstring}
 \RequirePackage{xparse}
@@ -30,17 +30,10 @@
 % Macro to nicely format URLs to included in text, not using the hyperref or url packages
 % Required Arguments 1: A URL
 %%%
-\NewDocumentCommand{\textURL}{ m }{\StrSubstitute{#1}{/}{\slash}}
-
-%%%
-% Macro to nicely format URLs to included in text that ensures a space (if needed) is added after, not using the hyperref or url packages
-% Required Arguments 1: A URL
-%%%
-\NewDocumentCommand{\textURLSp}{ m }{\StrSubstitute{#1}{/}{\slash}\xspace}
+\NewDocumentCommand{\textURL}{ m }{\StrSubstitute{#1}{/}{\slash}\xspace}
 
 %%%
 % Macro to easily add a clickable URL to the document as a footnote
 % Required Arguments 1: A URL
 %%%
 \NewDocumentCommand{\ftURL}{ m }{\footnote{\raggedright \url{#1}}}
-
